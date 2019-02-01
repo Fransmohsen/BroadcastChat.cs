@@ -28,7 +28,8 @@ namespace BroadcastChat.cs
             while(true)
             {
                 //Använderen skriver medelande 
-                Console.WriteLine(">");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Skriv meddelandet:");
                 string msg = Console.ReadLine();
 
                 byte[] sendbuf = Encoding.UTF8.GetBytes(msg);
@@ -45,11 +46,15 @@ namespace BroadcastChat.cs
             {
                 while(true)
                 {
+                    DateTime time = DateTime.Now;
+                    string format = "MMM ddd d HH:mm yyyy";
                     //skapa  objekt som lyssnar efter traik från valfri ip-adress men via port
                     IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, ListenPort);
                     byte[] bytes = listener.Receive(ref groupEP);
-                    Console.WriteLine("Mottaget meddelande från {0} : {1}\n",
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("\n Mottaget meddelande från {0} : {1}\n",
                         groupEP.ToString(), Encoding.UTF8.GetString(bytes,0,bytes.Length));
+                    Console.WriteLine("Meddelandet mottogs: " + time.ToString(format));
                 }
             }
             catch (Exception e)
